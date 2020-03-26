@@ -1,2 +1,2 @@
 # ProyectoED2
-Proyecto de curo Estructura de Datos II
+Proyecto de curso Estructura de Datos II
