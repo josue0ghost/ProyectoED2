@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AlmacenEbenEzer.Models;
 
 namespace AlmacenEbenEzer.Controllers
 {
     public class SucursalController : Controller
     {
+
+        //<input type = "button" value="Sucursales" onclick="location.href='@Url.Action("Index", "Sucursal")'" class="btn btn-default" />
         // GET: Sucursal
         public ActionResult Index()
         {
-            return View();
+            return View(Data.Instance.sucursales);
         }
 
         // GET: Sucursal/Details/5
@@ -28,18 +31,15 @@ namespace AlmacenEbenEzer.Controllers
 
         // POST: Sucursal/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create([Bind(Include = "ID,Nombre,Direccion")] Sucursal sucursal)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                Data.Instance.sucursales.Add(sucursal);                
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(sucursal);
         }
 
         // GET: Sucursal/Edit/5

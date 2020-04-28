@@ -7,8 +7,8 @@ namespace AlmacenEbenEzer.Models
 {
     public class Sucursal
     {
-        int ID { get; set; }
-        string nombre { get; set; }
-        string direccion { get; set; }
+        public int ID { get; set; }
+        public string Nombre { get; set; }
+        public string Direccion { get; set; }
     }
 }
