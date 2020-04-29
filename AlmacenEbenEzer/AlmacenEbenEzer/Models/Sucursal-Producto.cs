@@ -7,8 +7,8 @@ namespace AlmacenEbenEzer.Models
 {
     public class Sucursal_Producto
     {
-        int IDSucursal { get; set; }
-        int IDProducto { get; set; }
-        int stock { get; set; }
+        public int IDSucursal { get; set; }
+        public int IDProducto { get; set; }
+        public int Stock { get; set; }
     }
 }
