@@ -15,7 +15,7 @@ namespace AlmacenEbenEzer.Models
 		public int CompareTo(object obj)
 		{
 			var s2 = (Sucursal)obj;
-			return Nombre.CompareTo(s2.Nombre);
+			return ID.CompareTo(s2.ID);
 		}
 
 		public int FixedSize { get { return 99; } }

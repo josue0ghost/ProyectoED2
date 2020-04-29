@@ -36,7 +36,7 @@ namespace AlmacenEbenEzer.Controllers
             if (ModelState.IsValid)
             {
                 Data.Instance.sucursales.Add(sucursal);
-                //Data.Instance.sucursalesTree.Add(sucursal);
+                Data.Instance.sucursalesTree.Add(sucursal);
                 return RedirectToAction("Index");
             }
 

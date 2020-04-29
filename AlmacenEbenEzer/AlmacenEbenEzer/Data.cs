@@ -21,7 +21,7 @@ namespace AlmacenEbenEzer
 		}
 
 		//Directory.GetParent(Directory.GetParent(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)).FullName).FullName + @"\Sucursales.txt"
-		public Tree<Sucursal> sucursalesTree = new Tree<Sucursal>(7, "", new CreateSucursal());
+		public Tree<Sucursal> sucursalesTree = new Tree<Sucursal>(7, @"C:\Compilar\Sucursales.txt", new CreateSucursal());
 		public List<Sucursal> sucursales = new List<Sucursal>();
 	}
 }
