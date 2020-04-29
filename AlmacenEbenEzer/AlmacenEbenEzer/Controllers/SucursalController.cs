@@ -9,8 +9,6 @@ namespace AlmacenEbenEzer.Controllers
 {
     public class SucursalController : Controller
     {
-
-        //<input type = "button" value="Sucursales" onclick="location.href='@Url.Action("Index", "Sucursal")'" class="btn btn-default" />
         // GET: Sucursal
         public ActionResult Index()
         {
@@ -36,7 +34,7 @@ namespace AlmacenEbenEzer.Controllers
             if (ModelState.IsValid)
             {
                 Data.Instance.sucursales.Add(sucursal);
-                Data.Instance.sucursalesTree.Add(sucursal);
+                //Data.Instance.sucursalesTree.Add(sucursal);
                 return RedirectToAction("Index");
             }
 
