@@ -35,7 +35,8 @@ namespace AlmacenEbenEzer.Controllers
         {
             if (ModelState.IsValid)
             {
-                Data.Instance.sucursales.Add(sucursal);                
+                Data.Instance.sucursales.Add(sucursal);
+                //Data.Instance.sucursalesTree.Add(sucursal);
                 return RedirectToAction("Index");
             }
 
@@ -43,25 +44,23 @@ namespace AlmacenEbenEzer.Controllers
         }
 
         // GET: Sucursal/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             return View();
         }
 
         // POST: Sucursal/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Include = "ID,Nombre,Direccion")] Sucursal sucursal)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                //db.Entry(movie).State = EntityState.Modified;
+                //db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(sucursal);
         }
 
         // GET: Sucursal/Delete/5
