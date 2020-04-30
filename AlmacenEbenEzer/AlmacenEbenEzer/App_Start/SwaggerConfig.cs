@@ -19,18 +19,15 @@ namespace AlmacenEbenEzer
             GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
                     {
-                        var baseDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\bin\";
-                        var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
-                        var commentsFile = Path.Combine(baseDirectory, commentsFileName);
+                        c.SingleApiVersion("v1", "Almacen Eben Ezer");
+                        //.Description("API del sistema de inventario del Almacen Eben Ezer")
+                        //.TermsOfService("© ALMACEN EBEN EZER")
+                        //.License(lc => lc
+                        //    .Name("Repositorio GitHub")
+                        //    .Url("https://github.com/josue0ghost/ProyectoED2"));
 
-                        c.SingleApiVersion("v1", "Almacen Eben Ezer")
-                        .Description("API del sistema de inventario del Almacen Eben Ezer")
-                        .TermsOfService("© ALMACEN EBEN EZER")
-                        .License(lc => lc
-                            .Name("Repositorio GitHub")
-                            .Url("https://github.com/josue0ghost/ProyectoED2"));
+                        c.IncludeXmlComments(string.Format(@"{0}\bin\AlmacenEbenEzer.XML", AppDomain.CurrentDomain.BaseDirectory));
 
-                        c.IncludeXmlComments(commentsFile);
                     })
                 .EnableSwaggerUi();
         }
