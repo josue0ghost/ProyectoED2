@@ -12,15 +12,13 @@ namespace AlmacenEbenEzer.Controllers
     public class ProductoController : Controller
     {
         // GET: Producto
+        /// <summary>
+        /// Retorna la lista de productos. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View(Data.Instance.productos);
-        }
-
-        // GET: Producto/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: Producto/Create
@@ -30,6 +28,11 @@ namespace AlmacenEbenEzer.Controllers
         }
 
         // POST: Producto/Create
+        /// <summary>
+        /// Crea un producto y lo almacena en el árbol B*
+        /// </summary>
+        /// <param name="producto">Modelo de "Producto" a insertar</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Create([Bind(Include = "ID,Nombre,Precio")] Producto producto)
         {
@@ -43,6 +46,12 @@ namespace AlmacenEbenEzer.Controllers
             return View(producto);
         }
 
+
+        /// <summary>
+        /// Agregar múltiples productos al cargar un archivo
+        /// </summary>
+        /// <param name="file">Archivo .CSV que contiene los productos</param>
+        /// <returns></returns>
         [HttpPost, ActionName("addFile")]
         public ActionResult AddFile(HttpPostedFileBase file) {
             var result = new StringBuilder();
