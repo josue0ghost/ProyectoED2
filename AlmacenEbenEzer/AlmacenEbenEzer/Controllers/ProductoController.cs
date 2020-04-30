@@ -9,11 +9,14 @@ using AlmacenEbenEzer.Models;
 
 namespace AlmacenEbenEzer.Controllers
 {
+    /// <summary>
+    /// Controlador para agregar productos al sistema, actualizar datos de un producto o bien, agregar múltiples productos mediante un archivo .csv
+    /// </summary>
     public class ProductoController : Controller
     {
         // GET: Producto
         /// <summary>
-        /// Retorna la lista de productos. 
+        /// Retorna la lista de productos existentes. 
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
@@ -49,7 +52,6 @@ namespace AlmacenEbenEzer.Controllers
 
             return View(producto);
         }
-
 
         /// <summary>
         /// Agregar múltiples productos al cargar un archivo
@@ -93,7 +95,7 @@ namespace AlmacenEbenEzer.Controllers
         /// <summary>
         /// Actualiza los datos de un producto.
         /// </summary>
-        /// <param name="producto"></param>
+        /// <param name="producto">Modelo "Producto" con los datos actualizados</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Edit([Bind(Include = "ID,Nombre,Precio")] Producto producto)

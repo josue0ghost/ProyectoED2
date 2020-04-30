@@ -63,7 +63,7 @@ namespace AlmacenEbenEzer.Controllers
         /// <summary>
         /// Actualiza y guarda los datos de un objeto Sucursal-Producto
         /// </summary>
-        /// <param name="relacion"></param>
+        /// <param name="relacion">Modelo con datos modificados</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Edit([Bind(Include = "IDSucursal,IDProducto,Stock")] Sucursal_Producto relacion)
@@ -80,10 +80,9 @@ namespace AlmacenEbenEzer.Controllers
        
         /// <summary>
         /// Devuelve la vista que corresponde a transferir unidades entre sucursales
-        /// </summary>
-        /// <param name="id"></param>
+        /// </summary>        
         /// <returns></returns>
-        public ActionResult Transfer(int? id) {
+        public ActionResult Transfer() {
             return View();
         }
 
