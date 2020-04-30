@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AlmacenEbenEzer.Models;
 
 namespace AlmacenEbenEzer.Controllers
 {
@@ -28,41 +29,48 @@ namespace AlmacenEbenEzer.Controllers
 
         // POST: Administrar/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create([Bind(Include = "IDSucursal,IDProducto,Stock")] Sucursal_Producto relacion)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                Data.Instance.sucursales_productos.Add(relacion);
+                //Data.Instance.sucursalesTree.Add(sucursal);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(relacion);
         }
 
         // GET: Administrar/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             return View();
         }
 
         // POST: Administrar/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Include = "IDSucursal,IDProducto,Stock")] Sucursal_Producto relacion)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                //db.Entry(movie).State = EntityState.Modified;
+                //db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(relacion);
         }
+       
+        public ActionResult Transfer(int? id) {
+            return View();
+        }
+
+
+        [HttpPost, ActionName("Transfer")]
+        public ActionResult Transfer(int id, int id2, int idproducto, int qty) {
+            return RedirectToAction("Index");
+        }
+
 
         // GET: Administrar/Delete/5
         public ActionResult Delete(int id)
@@ -86,4 +94,5 @@ namespace AlmacenEbenEzer.Controllers
             }
         }
     }
+    
 }

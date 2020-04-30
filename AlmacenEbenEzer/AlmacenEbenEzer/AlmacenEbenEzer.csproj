@@ -186,6 +186,9 @@
     <Content Include="Views\Producto\Edit.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />
     <Content Include="Views\Administrar\Index.cshtml" />
+    <Content Include="Views\Administrar\Create.cshtml" />
+    <Content Include="Views\Administrar\Edit.cshtml" />
+    <Content Include="Views\Administrar\Transfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

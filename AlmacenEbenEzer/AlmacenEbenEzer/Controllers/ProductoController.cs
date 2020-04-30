@@ -49,7 +49,7 @@ namespace AlmacenEbenEzer.Controllers
             using (var reader = new StreamReader(file.InputStream))
             {
                 while (reader.Peek() >= 0)
-                    result.AppendLine(reader.ReadLine());
+                    Data.Instance.productos.Add(readProducto(reader.ReadLine()));
             }
 
             return RedirectToAction("Index");
@@ -105,6 +105,18 @@ namespace AlmacenEbenEzer.Controllers
             {
                 return View();
             }
+        }
+
+
+        static Producto readProducto(string line)
+        {
+            string[] items = line.Split(',');
+            Producto response = new Producto();
+            response.ID = int.Parse(items[0]);
+            response.Nombre = items[1];
+            response.Precio = decimal.Parse(items[2]);
+
+            return response;
         }
     }
 }
