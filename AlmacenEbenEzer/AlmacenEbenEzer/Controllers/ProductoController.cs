@@ -21,6 +21,10 @@ namespace AlmacenEbenEzer.Controllers
             return View(Data.Instance.productos);
         }
 
+        /// <summary>
+        /// Devuelve vista para crear producto
+        /// </summary>
+        /// <returns></returns>
         // GET: Producto/Create
         public ActionResult Create()
         {
@@ -65,6 +69,11 @@ namespace AlmacenEbenEzer.Controllers
         }
 
         // GET: Producto/Edit/5
+        /// <summary>
+        /// Devuelve los datos originales del producto que se modificará
+        /// </summary>
+        /// <param name="id">ID del producto</param>
+        /// <returns></returns>       
         public ActionResult Edit(int? id)
         {
             //Producto producto = null;
@@ -81,6 +90,11 @@ namespace AlmacenEbenEzer.Controllers
         }
 
         // POST: Producto/Edit/5
+        /// <summary>
+        /// Actualiza los datos de un producto.
+        /// </summary>
+        /// <param name="producto"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit([Bind(Include = "ID,Nombre,Precio")] Producto producto)
         {
@@ -92,28 +106,6 @@ namespace AlmacenEbenEzer.Controllers
                 return RedirectToAction("Index");
             }
             return View(producto);
-        }
-
-        // GET: Producto/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Producto/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
 

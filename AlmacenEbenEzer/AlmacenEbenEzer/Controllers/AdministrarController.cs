@@ -10,24 +10,31 @@ namespace AlmacenEbenEzer.Controllers
     public class AdministrarController : Controller
     {
         // GET: Administrar
+        /// <summary>
+        /// Devuelve los objetos Sucursal-producto existentes en el sistema
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View(Data.Instance.sucursales_productos);
         }
 
-        // GET: Administrar/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: Administrar/Create
+        /// <summary>
+        /// Devuelve la vista para crear Sucursal-Producto
+        /// </summary>
+        /// <returns></returns>        
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Administrar/Create
+        /// <summary>
+        /// Crea un objeto con el modelo de datos "Sucursal producto".
+        /// </summary>
+        /// <param name="relacion">Modelo a insertar en los datos del sistema</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Create([Bind(Include = "IDSucursal,IDProducto,Stock")] Sucursal_Producto relacion)
         {
@@ -42,12 +49,22 @@ namespace AlmacenEbenEzer.Controllers
         }
 
         // GET: Administrar/Edit/5
+        /// <summary>
+        /// Devuelve los datos originales del objeto a modificar
+        /// </summary>
+        /// <param name="id">ID del objeto Sucursal-Producto a modificar</param>
+        /// <returns></returns>
         public ActionResult Edit(int? id)
         {
             return View();
         }
 
         // POST: Administrar/Edit/5
+        /// <summary>
+        /// Actualiza y guarda los datos de un objeto Sucursal-Producto
+        /// </summary>
+        /// <param name="relacion"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit([Bind(Include = "IDSucursal,IDProducto,Stock")] Sucursal_Producto relacion)
         {
@@ -61,37 +78,27 @@ namespace AlmacenEbenEzer.Controllers
             return View(relacion);
         }
        
+        /// <summary>
+        /// Devuelve la vista que corresponde a transferir unidades entre sucursales
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Transfer(int? id) {
             return View();
         }
 
 
+        /// <summary>
+        /// Transfiere unidades de una sucursal a otra
+        /// </summary>
+        /// <param name="id">ID Sucursal origen</param>
+        /// <param name="id2">ID Sucursal destino</param>
+        /// <param name="idproducto">ID del producto a trasladar</param>
+        /// <param name="qty">Cantidad del producto que se va a transferir a la sucursal destino</param>
+        /// <returns></returns>
         [HttpPost, ActionName("Transfer")]
         public ActionResult Transfer(int id, int id2, int idproducto, int qty) {
             return RedirectToAction("Index");
-        }
-
-
-        // GET: Administrar/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Administrar/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
     
