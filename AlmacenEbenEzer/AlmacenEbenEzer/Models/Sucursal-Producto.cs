@@ -7,7 +7,7 @@ using System.Web;
 namespace AlmacenEbenEzer.Models
 {
     /// <summary>
-    /// Relacion entre las clases "Sucursal" y "Producto"
+    /// Relacion entre las clases "Sucursal" y "Producto".
     /// </summary>
     public class Sucursal_Producto
     {
