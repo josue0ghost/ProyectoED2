@@ -7,6 +7,9 @@ using AlmacenEbenEzer.Models;
 
 namespace AlmacenEbenEzer.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AdministrarController : Controller
     {
         // GET: Administrar

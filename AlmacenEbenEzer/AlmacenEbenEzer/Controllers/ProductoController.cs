@@ -24,11 +24,11 @@ namespace AlmacenEbenEzer.Controllers
             return View(Data.Instance.productos);
         }
 
+        // GET: Producto/Create
         /// <summary>
-        /// Devuelve vista para crear producto
+        /// Devuelve la vista para crear un producto
         /// </summary>
         /// <returns></returns>
-        // GET: Producto/Create
         public ActionResult Create()
         {
             return View();
