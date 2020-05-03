@@ -49,7 +49,7 @@ namespace AlmacenEbenEzer.Models
 		public string ToFixedSizeString()
 		{
 			return $"{ID.ToString("0000000000;-0000000000")}~" +
-				$"{string.Format("{0,-25}", Nombre)}"+
+				$"{string.Format("{0,-25}", Nombre)}~" +
 				$"{string.Format("{0,-25}", Direccion)}" ;
 		}
 

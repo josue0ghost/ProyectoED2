@@ -25,6 +25,7 @@ namespace AlmacenEbenEzer.Tree
 		/// <param name="Path"></param>
 		private Tree(int Order, string Path)
 		{
+			//this.createFixedSizeText = createFixedSizeText;
 			Header e = CreateHeader(Order);
 			Node<T> root = CreateNode(Order);
 
@@ -61,8 +62,6 @@ namespace AlmacenEbenEzer.Tree
 			this.Root = Convert.ToInt16(values[0]);
 			this.Order = Convert.ToInt16(values[1]);
 			this.LastPosition = Convert.ToInt16(values[2]);
-
-
 		}
 
 		#region Iniciadores

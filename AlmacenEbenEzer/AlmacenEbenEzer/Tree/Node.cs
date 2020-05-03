@@ -72,7 +72,7 @@ namespace AlmacenEbenEzer.Tree
 			InTextSize += Util.IntegerSize + 1; // Padre
 
 			if (Father == -1)
-			{
+			{				
 				InTextSize += (Data[0].FixedSize + 1) * ((4 * (Order - 1)) / 3); //Data
 				InTextSize += (Util.IntegerSize + 1) * ((4 * (Order - 1)) / 3) + (Util.IntegerSize + 1);    // Children
 			}
@@ -163,7 +163,11 @@ namespace AlmacenEbenEzer.Tree
 		#region Read n' Write
 		internal Node<T> ReadNode(string Path, int Order, int Root, int Position, ICreateFixedSizeText<T> createFixedSizeText)
 		{
-			Node<T> node = new Node<T>(Order, Position, 0, createFixedSizeText);
+			int fatherPosition = 0;
+			if (Position == 1)
+				fatherPosition = -1;
+
+			Node<T> node = new Node<T>(Order, Position, fatherPosition, createFixedSizeText);
 			node.Data = new List<T>();
 
 			int HeaderSize = Header.FixedSize;
