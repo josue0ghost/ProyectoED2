@@ -45,7 +45,11 @@ namespace AlmacenEbenEzer.Controllers
             if (ModelState.IsValid)
             {
                 Data.Instance.sucursales.Add(sucursal);
-                //Data.Instance.sucursalesTree.Add(sucursal);
+                //cifrar información
+                sucursal.ID = int.Parse(Data.Instance.cipherMethods.cipher(sucursal.ID.ToString()));
+                sucursal.Nombre = Data.Instance.cipherMethods.cipher(sucursal.Nombre);
+                sucursal.Direccion = Data.Instance.cipherMethods.cipher(sucursal.Direccion);
+
                 return RedirectToAction("Index");
             }
 
