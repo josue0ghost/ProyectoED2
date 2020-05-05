@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,9 +17,35 @@ namespace AlmacenEbenEzer.Controllers
         /// <summary>
         /// Retorna la lista de Sucursales existentes
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns>        
         public ActionResult Index()
         {
+            string basePath = string.Format(@"{0}Arboles\", AppContext.BaseDirectory);
+            DirectoryInfo directory = Directory.CreateDirectory(basePath);
+
+            var buffer = new byte[3];//contiene bytes 1 o 0, indicando si los arboles estan inicializados o no 
+            using (var fs = new FileStream(basePath + @"init.txt", FileMode.OpenOrCreate))
+            {
+                fs.Read(buffer, 0, 3);
+            }
+
+            if (buffer[0] == 0)
+            {
+                Data.Instance.sucursalesTree = new Tree.Tree<Sucursal>(
+                7,
+                basePath + @"sucursales.txt",
+                new CreateSucursal());
+                buffer[0] = 1;
+            }
+            else
+            {
+                Data.Instance.sucursalesTree = new Tree.Tree<Sucursal>(
+                7,
+                basePath + @"sucursales.txt",
+                new CreateSucursal(),
+                1); // 1 indica que y ha sido creado el arbol 
+            }
+
             return View(Data.Instance.sucursales);
         }
 

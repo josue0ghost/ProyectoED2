@@ -19,13 +19,9 @@ namespace AlmacenEbenEzer
 				return instance;
 			}
 		}
+		
 
-		DirectoryInfo directory = Directory.CreateDirectory(string.Format(@"{0}Arboles\", AppContext.BaseDirectory));
-
-		public Tree<Sucursal> sucursalesTree = new Tree<Sucursal>(
-			7,
-			string.Format(@"{0}Arboles\", AppContext.BaseDirectory) + "sucursales.txt",
-			new CreateSucursal());
+		public Tree<Sucursal> sucursalesTree = new Tree<Sucursal>();
 
 		//listas para pruebas temporales 
 		public List<Sucursal> sucursales = new List<Sucursal>();

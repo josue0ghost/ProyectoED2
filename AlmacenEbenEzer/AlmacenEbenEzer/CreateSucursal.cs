@@ -12,16 +12,20 @@ namespace AlmacenEbenEzer
 		public Sucursal Create(string FixedSizeText)
 		{
 			Sucursal ob = new Sucursal();
-			ob.Nombre = Convert.ToString(FixedSizeText.Substring(0, 10));
-			/*ob. = Convert.ToString(FixedSizeText.Substring(11, 20));
-			ob.Campos = Convert.ToString(FixedSizeText.Substring(21, 222));
-			*/
+			ob.ID = Convert.ToInt32(FixedSizeText.Substring(0, 10));
+			ob.Nombre = Convert.ToString(FixedSizeText.Substring(11, 25)).Trim();
+			ob.Direccion = Convert.ToString(FixedSizeText.Substring(37, 25)).Trim();
 			return ob;
 		}
 
 		public Sucursal CreateNull()
 		{
-			return new Sucursal();
+			Sucursal sucursal = new Sucursal();
+			sucursal.ID = 0;
+			sucursal.Nombre = "";
+			sucursal.Direccion = "";
+
+			return sucursal;
 		}
 	}
 }
