@@ -44,6 +44,7 @@ namespace AlmacenEbenEzer.Controllers
                     //cambiar el estado del archivo a creado. byte = 1.
                     using (var fs = new FileStream(basePath + @"init.txt", FileMode.OpenOrCreate))
                     {
+                        //fs.Seek(0, SeekOrigin.Begin);
                         fs.Write(buffer, 0, 3);                        
                     }
                 }
