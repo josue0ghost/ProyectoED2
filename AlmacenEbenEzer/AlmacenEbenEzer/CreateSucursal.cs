@@ -11,8 +11,12 @@ namespace AlmacenEbenEzer
     {
 		public Sucursal Create(string FixedSizeText)
 		{
-			Sucursal ob = new Sucursal();
-			ob.Nombre = Convert.ToString(FixedSizeText.Substring(0, 10));
+			Sucursal ob = new Sucursal
+			{
+				ID = Convert.ToInt32(FixedSizeText.Substring(0, 10)),
+				Nombre = Convert.ToString(FixedSizeText.Substring(11, 25)),
+				Direccion = Convert.ToString(FixedSizeText.Substring(26, 50))
+			};
 			/*ob. = Convert.ToString(FixedSizeText.Substring(11, 20));
 			ob.Campos = Convert.ToString(FixedSizeText.Substring(21, 222));
 			*/
