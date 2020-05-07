@@ -40,7 +40,7 @@ namespace AlmacenEbenEzer.Models
 		/// <summary>
 		/// Definir el tamaño de escritura en el archivo del arbol B*
 		/// </summary>
-		public int FixedSize { get { return 99; } }
+		public int FixedSize { get { return 62; } }
 
 		/// <summary>
 		/// Cambia las propiedades de como se mostrarán los atributos del modelo
