@@ -95,8 +95,7 @@ namespace AlmacenEbenEzer.Controllers
         public ActionResult Create([Bind(Include = "ID,Nombre,Direccion")] Sucursal sucursal)
         {
             if (ModelState.IsValid)
-            {
-                Data.Instance.sucursales.Add(sucursal);                
+            {                
                 Data.Instance.sucursalesTree.Add(sucursal);
                 return RedirectToAction("Index");
             }
