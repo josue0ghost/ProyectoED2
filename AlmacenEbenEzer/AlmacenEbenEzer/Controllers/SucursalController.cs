@@ -36,7 +36,7 @@ namespace AlmacenEbenEzer.Controllers
                 if (buffer[0] == 0)
                 {
                     Data.Instance.sucursalesTree = new Tree.Tree<Sucursal>(
-                    7,
+                    5,
                     basePath + @"sucursales.txt",
                     new CreateSucursal());
                     buffer[0] = 1;
@@ -44,7 +44,7 @@ namespace AlmacenEbenEzer.Controllers
                     //cambiar el estado del archivo a creado. byte = 1.
                     using (var fs = new FileStream(basePath + @"init.txt", FileMode.OpenOrCreate))
                     {
-                        //fs.Seek(0, SeekOrigin.Begin);
+                        fs.Seek(0, SeekOrigin.Begin);
                         fs.Write(buffer, 0, 3);                        
                     }
                 }

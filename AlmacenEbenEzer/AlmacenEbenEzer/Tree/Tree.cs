@@ -60,7 +60,7 @@ namespace AlmacenEbenEzer.Tree
 			var buffer = new byte[Header.FixedSize];
 			using (var fs = new FileStream(Path, FileMode.OpenOrCreate))
 			{
-				fs.Seek(0, SeekOrigin.Begin);
+				//fs.Seek(0, SeekOrigin.Begin);
 				fs.Read(buffer, 0, Header.FixedSize);
 			}
 
@@ -159,7 +159,7 @@ namespace AlmacenEbenEzer.Tree
 			}
 			else
 			{
-				Insert(node.Children[node.PositionInNode(data)], data);
+				Insert(node.Children[node.AproxPosition(data)], data);
 			}
 		}
 
@@ -169,7 +169,7 @@ namespace AlmacenEbenEzer.Tree
 			{
 				Node<T> nFather = new Node<T>();
 				nFather.ID = node.Father;
-				nFather.ReadNode(this.Path, this.Order, this.Root, node.Father, createFixedSizeText);
+				nFather = nFather.ReadNode(this.Path, this.Order, this.Root, node.Father, createFixedSizeText);
 
 				int position = 0;
 				for (int i = 0; i < nFather.Children.Count(); i++)
@@ -185,21 +185,21 @@ namespace AlmacenEbenEzer.Tree
 				// del nodo a la derecha
 				if (nFather.Children[position + 1] != Util.NullPointer)
 				{
-					tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position + 1], createFixedSizeText);
+					tempNode = tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position + 1], createFixedSizeText);
 					if (!tempNode.Full)
 					{
 						node.Data.Add(data);    // se inserta en el nodo que es
 						node.Data.Sort();
 						T tempData = node.Data[node.Data.Count() - 1]; // el dato que va a subir al padre
 						node.Data.Remove(tempData); // remuevo el dato porque ya lo guarde
-						node.WriteNodeOnDisk(this.Path);
+						node.WriteNodeOnDisk(this.Path, this.Root);
 
 						T tempData2 = nFather.Data[position];// dato del padre que va a bajar al hijo derecho
 						nFather.Data.Insert(position, tempData2); // se inserta el dato en el padre en la posición correcta
 
 						tempNode.Data.Insert(0, data); // se inserta al inicio de la lista el dato que baje del padre
 
-						tempNode.WriteNodeOnDisk(this.Path); //guardo los cambios
+						tempNode.WriteNodeOnDisk(this.Path, this.Root); //guardo los cambios
 
 						return;
 					}
@@ -207,21 +207,21 @@ namespace AlmacenEbenEzer.Tree
 				// del nodo a la izquierda
 				if (position > 0)
 				{
-					tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position - 1], createFixedSizeText);
+					tempNode = tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position - 1], createFixedSizeText);
 					if (!tempNode.Full)
 					{
 						node.Data.Add(data);    // se inserta en el nodo que es
 						node.Data.Sort();
 						T tempData = node.Data[0]; // el dato que va a subir al padre
 						node.Data.Remove(tempData); // remuevo el dato porque ya lo guarde
-						node.WriteNodeOnDisk(this.Path);
+						node.WriteNodeOnDisk(this.Path, this.Root);
 
 						T tempData2 = nFather.Data[position - 1];// dato del padre que va a bajar al hijo izquierdo
 						nFather.Data.Insert(position - 1, tempData2); // se inserta el dato en el padre en la posición correcta
 
 						tempNode.Data.Add(data); // se inserta al inicio de la lista el dato que baje del padre
 
-						tempNode.WriteNodeOnDisk(this.Path); //guardo los cambios
+						tempNode.WriteNodeOnDisk(this.Path, this.Root); //guardo los cambios
 
 						return;
 					}
@@ -237,12 +237,12 @@ namespace AlmacenEbenEzer.Tree
 				if (nFather.Children[position + 1] != Util.NullPointer) // si es por nodo derecho
 				{
 					SuperNode.Add(nFather.Data[position]);// añado la raíz en común al super nodo
-					tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position + 1], createFixedSizeText);
+					tempNode = tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position + 1], createFixedSizeText);
 				}
 				else if (position > 0) // si es por nodo izquierdo
 				{
 					SuperNode.Add(nFather.Data[position - 1]); // añado la raíz en común al super nodo
-					tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position - 1], createFixedSizeText);
+					tempNode = tempNode.ReadNode(this.Path, this.Order, this.Root, nFather.Children[position - 1], createFixedSizeText);
 				}
 
 				foreach (var item in tempNode.Data) // añado los items del hermano al super nodo
@@ -290,9 +290,11 @@ namespace AlmacenEbenEzer.Tree
 					count++;
 				}
 				count = 0;
-				Node<T> newNode = null;
+				Node<T> newNode = new Node<T>();
 				newNode.Father = nFather.ID;
 				newNode.ID = LastPosition;
+				newNode.Data = new List<T>();
+				newNode.Children = new List<int>();
 				LastPosition++; // actualizacion de ultima posicion disponible
 								// datos al nuevo nodo
 				for (int i = 0; i < this.Order - 1; i++)
@@ -313,17 +315,17 @@ namespace AlmacenEbenEzer.Tree
 				}
 
 				// escritura de nodos
-				node.WriteNodeOnDisk(this.Path);
-				tempNode.WriteNodeOnDisk(this.Path);
-				nFather.WriteNodeOnDisk(this.Path);
-				newNode.WriteNodeOnDisk(this.Path);
+				node.WriteNodeOnDisk(this.Path, this.Root);
+				tempNode.WriteNodeOnDisk(this.Path, this.Root);
+				nFather.WriteNodeOnDisk(this.Path, this.Root);
+				newNode.WriteNodeOnDisk(this.Path, this.Root);
 				// como se agregó un nuevo nodo, hay que actualizar el header
 				WriteHeader();
 			}
 			else if (!node.Full)
 			{
 				node.InsertData(data);
-				node.WriteNodeOnDisk(this.Path);
+				node.WriteNodeOnDisk(this.Path, this.Root);
 				return;
 			}
 
@@ -341,7 +343,7 @@ namespace AlmacenEbenEzer.Tree
 				{
 					NodeChildern = NodeChildern.ReadNode(this.Path, this.Order, this.Root, NewNode.Children[i], createFixedSizeText);
 					NodeChildern.Father = NewNode.ID;
-					NodeChildern.WriteNodeOnDisk(Path);
+					NodeChildern.WriteNodeOnDisk(Path, this.Root);
 				}
 				else
 				{
@@ -362,18 +364,19 @@ namespace AlmacenEbenEzer.Tree
 				newRoot.Father = Util.NullPointer;
 				NewNode.Father = newRoot.ID;
 				this.Root = newRoot.ID;
+				
+				node.WriteNodeOnDisk(this.Path, this.Root);
+				NewNode.WriteNodeOnDisk(this.Path, this.Root);
+				newRoot.WriteNodeOnDisk(this.Path, this.Root);
 
-				newRoot.WriteNodeOnDisk(this.Path);
-				node.WriteNodeOnDisk(this.Path);
-				NewNode.WriteNodeOnDisk(this.Path);
 			}
 			else
 			{
-				node.WriteNodeOnDisk(this.Path);
-				NewNode.WriteNodeOnDisk(this.Path);
+				node.WriteNodeOnDisk(this.Path, this.Root);
+				NewNode.WriteNodeOnDisk(this.Path, this.Root);
 
 				Node<T> Father = new Node<T>();
-				Father.ReadNode(this.Path, this.Order, this.Root, node.Father, createFixedSizeText);
+				Father = Father.ReadNode(this.Path, this.Order, this.Root, node.Father, createFixedSizeText);
 				UpData(Father, data, NewNode.ID);
 			}
 		}
