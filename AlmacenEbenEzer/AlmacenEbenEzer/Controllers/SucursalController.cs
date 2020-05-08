@@ -51,7 +51,7 @@ namespace AlmacenEbenEzer.Controllers
                 else
                 {
                     Data.Instance.sucursalesTree = new Tree.Tree<Sucursal>(
-                    7,
+                    5,
                     basePath + @"sucursales.txt",
                     new CreateSucursal(),
                     1); // 1 indica que ya ha sido creado el arbol 
@@ -67,6 +67,8 @@ namespace AlmacenEbenEzer.Controllers
             {
                 if (temp[i].ID != 0)
                 {
+                    //temp[i].Nombre = Data.Instance.cipherMethods.decipher(temp[i].Nombre);
+                    //temp[i].Direccion = Data.Instance.cipherMethods.decipher(temp[i].Direccion);
                     response.Add(temp[i]);
                 }
             }
@@ -95,16 +97,13 @@ namespace AlmacenEbenEzer.Controllers
         public ActionResult Create([Bind(Include = "ID,Nombre,Direccion")] Sucursal sucursal)
         {
             if (ModelState.IsValid)
-            {
-                Data.Instance.sucursalesTree.Add(sucursal);
-                Data.Instance.sucursales.Add(sucursal);
-                //cifrar información
-                sucursal.ID = int.Parse(Data.Instance.cipherMethods.cipher(sucursal.ID.ToString()));
-                sucursal.Nombre = Data.Instance.cipherMethods.cipher(sucursal.Nombre);
-                sucursal.Direccion = Data.Instance.cipherMethods.cipher(sucursal.Direccion);
+            {                            
+                //cifrar información                
+                //sucursal.Nombre = Data.Instance.cipherMethods.cipher(sucursal.Nombre);
+                //sucursal.Direccion = Data.Instance.cipherMethods.cipher(sucursal.Direccion);
 
-                            
-                
+                Data.Instance.sucursalesTree.Add(sucursal);
+
                 return RedirectToAction("Index");
             }
 
@@ -119,7 +118,18 @@ namespace AlmacenEbenEzer.Controllers
         /// <returns></returns>
         public ActionResult Edit(int? id)
         {
-            return View();
+            Sucursal sucursal = new Sucursal();
+            List<Sucursal> elements = Data.Instance.sucursalesTree.ToList();
+
+            for (int i = 0; i < elements.Count; i++)
+            {
+                if (elements[i].ID == id)
+                {
+                    sucursal = elements[i];
+                }
+            }            
+            
+            return View(sucursal);
         }
 
         // POST: Sucursal/Edit/5
@@ -133,9 +143,18 @@ namespace AlmacenEbenEzer.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(movie).State = EntityState.Modified;
-                //db.SaveChanges();
+                Sucursal auxiliar = new Sucursal();
 
+                List<Sucursal> elements = Data.Instance.sucursalesTree.ToList();
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    if (elements[i].ID == sucursal.ID)
+                    {
+                        auxiliar = elements[i];
+                    }
+                }
+
+                Data.Instance.sucursalesTree.UpDate(auxiliar, sucursal);
                 return RedirectToAction("Index");
             }
             return View(sucursal);

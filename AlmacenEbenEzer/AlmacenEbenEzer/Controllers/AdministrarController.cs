@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,7 +20,58 @@ namespace AlmacenEbenEzer.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            return View(Data.Instance.sucursales_productos);
+            string basePath = string.Format(@"{0}Arboles\", AppContext.BaseDirectory);
+
+            if (Data.Instance.blockAdmin == false)
+            {
+                DirectoryInfo directory = Directory.CreateDirectory(basePath);
+
+                var buffer = new byte[3];//contiene bytes 1 o 0, indicando si los arboles estan inicializados o no 
+                using (var fs = new FileStream(basePath + @"init.txt", FileMode.OpenOrCreate))
+                {
+                    fs.Read(buffer, 0, 3);
+                }
+
+                //pos0 = 0 el arbol no ha sido inicializado. pos0 = 1 el arbol ya ha sido creado y tiene datos. 
+                if (buffer[2] == 0)
+                {
+                    Data.Instance.scTree = new Tree.Tree<Sucursal_Producto>(
+                    5,
+                    basePath + @"admin.txt",
+                    new CreateObject());
+                    buffer[2] = 1;
+
+                    //cambiar el estado del archivo a creado. byte = 1.
+                    using (var fs = new FileStream(basePath + @"init.txt", FileMode.OpenOrCreate))
+                    {
+                        //fs.Seek(0, SeekOrigin.Begin);
+                        fs.Write(buffer, 0, 3);
+                    }
+                }
+                else
+                {
+                    Data.Instance.scTree = new Tree.Tree<Sucursal_Producto>(
+                    5,
+                    basePath + @"admin.txt",
+                    new CreateObject(),
+                    1); // 1 indica que ya ha sido creado el arbol 
+                }
+
+                Data.Instance.blockAdmin = true;
+            }
+
+            List<Sucursal_Producto> response = new List<Sucursal_Producto>();
+            List<Sucursal_Producto> temp = Data.Instance.scTree.ToList();
+
+            for (int i = 0; i < temp.Count; i++)
+            {
+                if (temp[i].IDSucursal != 0)
+                {
+                    response.Add(temp[i]);
+                }
+            }
+            response.Sort();
+            return View(response);
         }
 
         // GET: Administrar/Create
@@ -43,8 +95,7 @@ namespace AlmacenEbenEzer.Controllers
         {
             if (ModelState.IsValid)
             {
-                Data.Instance.sucursales_productos.Add(relacion);
-                //Data.Instance.sucursalesTree.Add(sucursal);
+                Data.Instance.scTree.Add(relacion);                
                 return RedirectToAction("Index");
             }
 

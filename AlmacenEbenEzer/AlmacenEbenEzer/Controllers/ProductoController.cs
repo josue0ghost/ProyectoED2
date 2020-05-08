@@ -37,7 +37,7 @@ namespace AlmacenEbenEzer.Controllers
                 if (buffer[1] == 0)
                 {
                     Data.Instance.productosTree = new Tree.Tree<Producto>(
-                    7,
+                    5,
                     basePath + @"productos.txt",
                     new CreateProducto());
                     buffer[1] = 1;
@@ -52,7 +52,7 @@ namespace AlmacenEbenEzer.Controllers
                 else
                 {
                     Data.Instance.productosTree = new Tree.Tree<Producto>(
-                    7,
+                    5,
                     basePath + @"productos.txt",
                     new CreateProducto(),
                     1); // 1 indica que ya ha sido creado el arbol 

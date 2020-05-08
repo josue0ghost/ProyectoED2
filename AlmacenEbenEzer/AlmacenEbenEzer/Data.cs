@@ -20,17 +20,16 @@ namespace AlmacenEbenEzer
 			}
 		}
 		
-
-		//Directory.GetParent(Directory.GetParent(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)).FullName).FullName + @"\Sucursales.txt"
-		//public Tree<Sucursal> sucursalesTree = new Tree<Sucursal>(7, "", new CreateSucursal());
 		
-		public SDES cipherMethods = new SDES();
+		public SDES cipherMethods = new SDES("");
 		public Tree<Sucursal> sucursalesTree = new Tree<Sucursal>();
 		public Tree<Producto> productosTree = new Tree<Producto>();
+		public Tree<Sucursal_Producto> scTree = new Tree<Sucursal_Producto>();
 
 		//variables de bloqueo de arboles
 		public bool blockSucursal = false;
 		public bool blockProducto = false;
+		public bool blockAdmin = false;
 
 		//listas para pruebas temporales 
 		public List<Sucursal_Producto> sucursales_productos = new List<Sucursal_Producto>();
