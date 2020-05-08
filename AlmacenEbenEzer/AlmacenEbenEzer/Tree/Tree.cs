@@ -472,16 +472,14 @@ namespace AlmacenEbenEzer.Tree
 			for (int i = 0; i < node.Data.Count; i++)
 			{
 				GetNodes(node.Children[i]);
-				if ((i < node.Data.Count))
-				{
-					elements.Add(node.Data[i]);
-				}
+				elements.Add(node.Data[i]);
 			}
 		}
 
 		public List<T> ToList() {
 			elements = new List<T>();
 			GetNodes(this.Root);
+			
 			return elements;
 		}
 		
