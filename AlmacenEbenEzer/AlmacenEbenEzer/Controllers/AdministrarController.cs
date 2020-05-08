@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using AlmacenEbenEzer.Models;
@@ -172,7 +173,71 @@ namespace AlmacenEbenEzer.Controllers
         /// <returns></returns>
         [HttpPost, ActionName("Transfer")]
         public ActionResult Transfer(int id, int id2, int idproducto, int qty) {
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                Sucursal_Producto origen = new Sucursal_Producto();
+                Sucursal_Producto destino = new Sucursal_Producto();
+
+                List<Sucursal_Producto> elements = Data.Instance.scTree.ToList();
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    if (elements[i].IDSucursal == id)
+                    {
+                        origen = elements[i];
+                    }
+
+                    if (elements[i].IDSucursal == id2)
+                    {
+                        destino = elements[i];
+                    }
+                }
+
+                //comprobar si la sucursal destino tiene el producto 
+                if (destino.IDProducto == idproducto) //transferir
+                {
+                    Sucursal_Producto origenModified = new Sucursal_Producto
+                    { 
+                        IDSucursal = origen.IDSucursal,
+                        IDProducto = origen.IDProducto,
+                        Stock = origen.Stock - qty
+                    };
+
+
+                    Sucursal_Producto destinoModified = new Sucursal_Producto
+                    {
+                        IDSucursal = destino.IDSucursal,
+                        IDProducto = destino.IDProducto,
+                        Stock = destino.Stock + qty
+                    };                    
+
+                    Data.Instance.scTree.UpDate(origen, origenModified);
+                    Data.Instance.scTree.UpDate(destino, destinoModified);
+                }
+                else //crear nueva relacion
+                {
+                    Sucursal_Producto origenModified = new Sucursal_Producto
+                    {
+                        IDSucursal = origen.IDSucursal,
+                        IDProducto = origen.IDProducto,
+                        Stock = origen.Stock - qty
+                    };
+
+                    Sucursal_Producto nueva = new Sucursal_Producto
+                    {
+                        IDSucursal = id2,
+                        IDProducto = idproducto,
+                        Stock = qty
+                    };
+
+                    Data.Instance.scTree.UpDate(origen, origenModified);
+                    Data.Instance.scTree.Add(nueva);
+
+                }
+
+                //Data.Instance.scTree.UpDate(auxiliar, producto);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
     
