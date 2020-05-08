@@ -160,7 +160,7 @@
     <Compile Include="Tree\ByteGenerator.cs" />
     <Compile Include="Tree\Header.cs" />
     <Compile Include="Tree\Node.cs" />
-    <Compile Include="Tree\Tree.cs" />
+    <Compile Include="Tree\SucursalTree.cs" />
     <Compile Include="Tree\Util.cs" />
   </ItemGroup>
   <ItemGroup>

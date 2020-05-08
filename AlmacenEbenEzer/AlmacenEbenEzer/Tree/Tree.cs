@@ -459,8 +459,7 @@ namespace AlmacenEbenEzer.Tree
 			}
 		}
 
-		private void GetNodes(int ActualPosition) {
-			Sucursal obj = new Sucursal();
+		private void GetNodes(int ActualPosition) {			
 
 			if (ActualPosition == Util.NullPointer)
 			{
@@ -473,7 +472,7 @@ namespace AlmacenEbenEzer.Tree
 			for (int i = 0; i < node.Data.Count; i++)
 			{
 				GetNodes(node.Children[i]);
-				if ((i < node.Data.Count) && (node.Data[i].ToFixedSizeString() != obj.ToFixedSizeString()))
+				if ((i < node.Data.Count))
 				{
 					elements.Add(node.Data[i]);
 				}
