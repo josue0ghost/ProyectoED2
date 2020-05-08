@@ -18,8 +18,7 @@ namespace AlmacenEbenEzer
 				if (instance == null) instance = new Data();
 				return instance;
 			}
-		}
-		
+		}		
 		
 		public SDES cipherMethods = new SDES("");
 		public Tree<Sucursal> sucursalesTree = new Tree<Sucursal>();
@@ -30,8 +29,5 @@ namespace AlmacenEbenEzer
 		public bool blockSucursal = false;
 		public bool blockProducto = false;
 		public bool blockAdmin = false;
-
-		//listas para pruebas temporales 
-		public List<Sucursal_Producto> sucursales_productos = new List<Sucursal_Producto>();
 	}
 }

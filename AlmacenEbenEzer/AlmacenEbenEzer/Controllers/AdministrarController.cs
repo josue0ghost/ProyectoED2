@@ -70,6 +70,7 @@ namespace AlmacenEbenEzer.Controllers
                     response.Add(temp[i]);
                 }
             }
+
             response.Sort();
             return View(response);
         }
@@ -110,7 +111,18 @@ namespace AlmacenEbenEzer.Controllers
         /// <returns></returns>
         public ActionResult Edit(int? id)
         {
-            return View();
+            Sucursal_Producto producto = new Sucursal_Producto();
+            List<Sucursal_Producto> elements = Data.Instance.scTree.ToList();
+
+            for (int i = 0; i < elements.Count; i++)
+            {
+                if (elements[i].IDSucursal == id)
+                {
+                    producto = elements[i];
+                }
+            }
+
+            return View(producto);
         }
 
         // POST: Administrar/Edit/5
@@ -124,9 +136,18 @@ namespace AlmacenEbenEzer.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(movie).State = EntityState.Modified;
-                //db.SaveChanges();
+                Sucursal_Producto auxiliar = new Sucursal_Producto();
 
+                List<Sucursal_Producto> elements = Data.Instance.scTree.ToList();
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    if (elements[i].IDSucursal == relacion.IDSucursal)
+                    {
+                        auxiliar = elements[i];
+                    }
+                }
+
+                Data.Instance.scTree.UpDate(auxiliar, relacion);
                 return RedirectToAction("Index");
             }
             return View(relacion);

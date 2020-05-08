@@ -36,7 +36,7 @@ namespace AlmacenEbenEzer.Models
             return IDSucursal.CompareTo(s2.IDSucursal);
         }
 
-        public int FixedSize { get { return 62; } }
+        public int FixedSize { get { return 30; } }
 
         public string ToFixedSizeString()
         {
