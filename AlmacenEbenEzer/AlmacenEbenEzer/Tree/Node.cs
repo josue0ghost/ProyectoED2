@@ -126,7 +126,11 @@ namespace AlmacenEbenEzer.Tree
 			}
 			else
 			{
-				return Header.FixedSize + ((ID - 1) * FixedSizeSeek()) + FixedSize(Util.NullPointer);
+				int factor = (ID - 2) * FixedSizeSeek();
+				int header = Header.FixedSize;
+				int raiz = FixedSize(Util.NullPointer);
+				int ret = factor + header + raiz;
+				return ret;
 			}
 		}
 
@@ -434,7 +438,7 @@ namespace AlmacenEbenEzer.Tree
 
 				// Llenar datos que suben
 				int j = 0;
-				for (int i = Middle + 1; i < Children.Count; i++)
+				for (int i = Middle + 1; i < Data.Count; i++)
 				{
 					Node.Data[j] = Data[i];
 					Data[i] = createFixedSizeText.CreateNull();
