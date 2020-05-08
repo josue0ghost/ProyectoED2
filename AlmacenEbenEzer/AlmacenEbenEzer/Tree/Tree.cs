@@ -17,6 +17,8 @@ namespace AlmacenEbenEzer.Tree
 		internal int LastPosition { get; set; }
 		internal FileStream File { get; set; }
 
+		List<T> elements = new List<T>();
+
 		private ICreateFixedSizeText<T> createFixedSizeText = null;
 
 		public Tree() { }
@@ -459,6 +461,31 @@ namespace AlmacenEbenEzer.Tree
 				}
 			}
 		}
+
+		private void GetNodes(int ActualPosition) {			
+
+			if (ActualPosition == Util.NullPointer)
+			{
+				return;
+			}
+			Node<T> node = new Node<T>();
+
+			node = node.ReadNode(this.Path, this.Order, this.Root, ActualPosition, this.createFixedSizeText);
+
+			for (int i = 0; i < node.Data.Count; i++)
+			{
+				GetNodes(node.Children[i]);
+				elements.Add(node.Data[i]);
+			}
+		}
+
+		public List<T> ToList() {
+			elements = new List<T>();
+			GetNodes(this.Root);
+			
+			return elements;
+		}
+		
 
 		private void PreOrder(int ActualPosition, StringBuilder text)
 		{

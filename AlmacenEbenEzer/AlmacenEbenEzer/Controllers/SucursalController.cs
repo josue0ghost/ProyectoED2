@@ -20,7 +20,7 @@ namespace AlmacenEbenEzer.Controllers
         /// <returns></returns>        
         public ActionResult Index()
         {            
-            string basePath = string.Format(@"{0}Arboles\", AppContext.BaseDirectory);            
+            string basePath = string.Format(@"{0}Arboles\", AppContext.BaseDirectory);
 
             if (Data.Instance.blockSucursal == false)
             {
@@ -44,8 +44,8 @@ namespace AlmacenEbenEzer.Controllers
                     //cambiar el estado del archivo a creado. byte = 1.
                     using (var fs = new FileStream(basePath + @"init.txt", FileMode.OpenOrCreate))
                     {
-                        fs.Seek(0, SeekOrigin.Begin);
-                        fs.Write(buffer, 0, 3);                        
+                        //fs.Seek(0, SeekOrigin.Begin);
+                        fs.Write(buffer, 0, 3);
                     }
                 }
                 else
@@ -60,7 +60,18 @@ namespace AlmacenEbenEzer.Controllers
                 Data.Instance.blockSucursal = true;
             }
 
-            return View(Data.Instance.sucursales);
+            List<Sucursal> response = new List<Sucursal>();
+            List<Sucursal> temp = Data.Instance.sucursalesTree.ToList();
+
+            for (int i = 0; i < temp.Count; i++)
+            {
+                if (temp[i].ID != 0)
+                {
+                    response.Add(temp[i]);
+                }
+            }
+            response.Sort();
+            return View(response);
         }
 
 
@@ -84,8 +95,7 @@ namespace AlmacenEbenEzer.Controllers
         public ActionResult Create([Bind(Include = "ID,Nombre,Direccion")] Sucursal sucursal)
         {
             if (ModelState.IsValid)
-            {
-                Data.Instance.sucursales.Add(sucursal);                
+            {                
                 Data.Instance.sucursalesTree.Add(sucursal);
                 return RedirectToAction("Index");
             }
