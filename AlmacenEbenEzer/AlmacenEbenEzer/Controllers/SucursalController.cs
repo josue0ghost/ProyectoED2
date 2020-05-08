@@ -59,9 +59,10 @@ namespace AlmacenEbenEzer.Controllers
 
                 Data.Instance.blockSucursal = true;
             }
-            
 
-            return View(Data.Instance.sucursalesTree.ToList());
+            List<Sucursal> response = Data.Instance.sucursalesTree.ToList();
+            response.Sort();
+            return View(response);
         }
 
 
