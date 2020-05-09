@@ -155,6 +155,7 @@
     <Compile Include="Huffman.cs" />
     <Compile Include="Interfaces\ICreateFixedSizeText.cs" />
     <Compile Include="Interfaces\IFixedSizeText.cs" />
+    <Compile Include="Models\CompressModel.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\Sucursal-Producto.cs" />
     <Compile Include="Models\Sucursal.cs" />
