@@ -1,4 +1,4 @@
-﻿using AlmacenEbenEzer.Tree;
+using AlmacenEbenEzer.Tree;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections;
@@ -242,27 +242,15 @@ namespace AlmacenEbenEzer
         {
             List<byte> response = new List<byte>();
 
-            bool xor;
-            bool carry = false;
             for (int i = 0; i < input.Count; i++)
             {
-                bool A, B;
-
-                A = (input[i] == 1) ? true : false;
-                B = (key[i] == 1) ? true : false;
-                
-                xor = A ^ B;
-                xor = xor ^ carry;
-
-                carry = (A == B && A == true) ? true : false;
-
-                if (xor == true)
+                if (input[i] == key[i])
                 {
-                    response.Add(1);
+                    response.Add(0);
                 }
                 else
                 {
-                    response.Add(0);
+                    response.Add(1);
                 }
             }
 
