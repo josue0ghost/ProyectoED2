@@ -171,9 +171,8 @@ namespace AlmacenEbenEzer.Controllers
         /// <param name="idproducto">ID del producto a trasladar</param>
         /// <param name="qty">Cantidad del producto que se va a transferir a la sucursal destino</param>
         /// <returns></returns>
-        [HttpPost, ActionName("Transfer")]        
-        public ActionResult Transfer([Bind(Include = "id,id2,idproducto,qty")] TransferModel modelo)
-        {
+        [HttpPost, ActionName("Transfer")]
+        public ActionResult Transfer(int id, int id2, int idproducto, int qty) {
             if (ModelState.IsValid)
             {
                 Sucursal_Producto origen = new Sucursal_Producto();
@@ -182,25 +181,25 @@ namespace AlmacenEbenEzer.Controllers
                 List<Sucursal_Producto> elements = Data.Instance.scTree.ToList();
                 for (int i = 0; i < elements.Count; i++)
                 {
-                    if (elements[i].IDSucursal == modelo.id)
+                    if (elements[i].IDSucursal == id)
                     {
                         origen = elements[i];
                     }
 
-                    if (elements[i].IDSucursal == modelo.id2)
+                    if (elements[i].IDSucursal == id2)
                     {
                         destino = elements[i];
                     }
                 }
 
                 //comprobar si la sucursal destino tiene el producto 
-                if (destino.IDProducto == modelo.idproducto) //transferir
+                if (destino.IDProducto == idproducto) //transferir
                 {
                     Sucursal_Producto origenModified = new Sucursal_Producto
                     { 
                         IDSucursal = origen.IDSucursal,
                         IDProducto = origen.IDProducto,
-                        Stock = origen.Stock - modelo.qty
+                        Stock = origen.Stock - qty
                     };
 
 
@@ -208,7 +207,7 @@ namespace AlmacenEbenEzer.Controllers
                     {
                         IDSucursal = destino.IDSucursal,
                         IDProducto = destino.IDProducto,
-                        Stock = destino.Stock + modelo.qty
+                        Stock = destino.Stock + qty
                     };                    
 
                     Data.Instance.scTree.UpDate(origen, origenModified);
@@ -220,14 +219,14 @@ namespace AlmacenEbenEzer.Controllers
                     {
                         IDSucursal = origen.IDSucursal,
                         IDProducto = origen.IDProducto,
-                        Stock = origen.Stock - modelo.qty
+                        Stock = origen.Stock - qty
                     };
 
                     Sucursal_Producto nueva = new Sucursal_Producto
                     {
-                        IDSucursal = modelo.id2,
-                        IDProducto = modelo.idproducto,
-                        Stock = modelo.qty
+                        IDSucursal = id2,
+                        IDProducto = idproducto,
+                        Stock = qty
                     };
 
                     Data.Instance.scTree.UpDate(origen, origenModified);
