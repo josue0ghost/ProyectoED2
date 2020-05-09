@@ -67,7 +67,7 @@ namespace AlmacenEbenEzer.Controllers
             {
                 if (temp[i].ID != 0)
                 {
-                    //temp[i].Nombre = Data.Instance.cipherMethods.decipher(temp[i].Nombre);
+                    temp[i].Nombre = Data.Instance.cipherMethods.decipher(temp[i].Nombre);
                     //temp[i].Direccion = Data.Instance.cipherMethods.decipher(temp[i].Direccion);
                     response.Add(temp[i]);
                 }
