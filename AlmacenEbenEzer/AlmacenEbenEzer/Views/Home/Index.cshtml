@@ -35,3 +35,16 @@
     }
 
 </div>
+<br />
+<br />
+
+<h2>Importar base de datos</h2>
+
+<div>
+    @using (Html.BeginForm("decompress", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="file" class="form-control" />
+        <br />
+        <input type="submit" value="Importar" class="btn btn-default" />
+    }
+</div>
